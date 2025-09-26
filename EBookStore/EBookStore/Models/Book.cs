@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EBookStore.Models
 {
@@ -9,6 +10,9 @@ namespace EBookStore.Models
         [MaxLength(40)]
         public string? BookName { get; set; }
         [Required]
+        [MaxLength(40)]
+        public string? AuthorName { get; set; }
+        [Required]
         public double  Price { get; set; }
         public string? BookImage { get; set; }
         [Required]
@@ -16,6 +20,8 @@ namespace EBookStore.Models
         public Genre Genre { get; set; }
         public List<OrderDetails> OrderDetails { get; set; }
         public List<CartDetail> CartDetail { get; set; }
+        [NotMapped]
+        public string GenreName { get; set; }
 
     }
 }

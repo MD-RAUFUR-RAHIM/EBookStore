@@ -1,4 +1,6 @@
+using EBookStore;
 using EBookStore.Data;
+using EBookStore.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ builder.Services
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IHomeRepository, HomeRepository>();
 var app = builder.Build();
 //using(var scope = app.Services.CreateScope())
 //{

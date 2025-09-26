@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using EBookStore.Models;
+using EBookStore.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EBookStore.Controllers
@@ -7,10 +8,11 @@ namespace EBookStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHomeRepository _homeRepository;
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
         {
             _logger = logger;
+            _homeRepository = homeRepository;
         }
 
         public IActionResult Index()
