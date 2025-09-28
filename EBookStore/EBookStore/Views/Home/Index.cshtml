@@ -1,46 +1,63 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using EBookStore.Models.DTOs
+@model BookDisplayModel
+@{
+    
 }
 <div class="my-2">
-<form class="row row-cols-lg-auto g-3 align-items-center">
+<form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
 
  <div class="col-12">
-    <label class="visually-hidden" for="inlineFormSelectPref">Genres</label>
-    <select class="form-select" id="genreId">
+            <label class="visually-hidden" for="genreId">Genres</label>
+            <select class="form-select" id="genreId" name="genreId">
     <option selected>Choose...</option>
-    <option value="1">Action</option>
-    <option value="2">Horror</option>
-    <option value="3">Romance</option>
-    <option value="4">Science Fiction</option>
+                @foreach(var genre in Model.Genres)
+                {
+                    <option selected="@(genre.Id == Model.GenreId)" value="@genre.Id">@genre.GenreName </option>
+                }
     </select>
  </div>
   <div class="col-12">
-    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+    <label class="visually-hidden" for="sterm">Username</label>
     <div class="input-group">
       <div class="input-group-text"></div>
-      <input type="text" class="form-control" id="" placeholder="Search By Title">
+      <input type="text" class="form-control" id="sterm" value = "@Model.Sterm" name= "sterm" placeholder="Search By Title">
     </div>
   </div>
 
 
   <div class="col-12">
     <button type="submit" class="btn btn-primary">Search</button>
+    <a href="Home/Index" class="btn btn-dark">Reset</a>
   </div>
 </form>
 </div>
 <div class="row mt-4">
-    @for(int i = 1; i <= 9 ; i++)
+    @foreach(var book in Model.Books)
     {
-        <div class="card col-md-3 mb-4 h-100">
-            <img src="https://picsum.photos/200" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Book title</h5>
-                <p class="card-text">
-                    Genre: 
-                    Author:
-                    Price:
-                </p>
-                <a href="#" class="btn btn-primary">Add to cart</a>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">               
+                @if (string.IsNullOrEmpty(book.BookImage))
+                {
+                    <img style="width:100%; height:300px;" src="https://picsum.photos/200" class="card-img-top" alt="...">
+                }
+                else
+                {
+                    <img style="width:100%; height:300px;" src="/images/@book.BookImage" class="card-img-top" alt="...">
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">@book.BookName</h5>
+                    <p class="card-text">
+                        Genre: @book.GenreName <br />
+                    </p>
+                    <p>
+                        Author: @book.AuthorName <br />
+                    </p>
+                    <p>
+                        Price: @book.Price
+                    </p>
+                    <a href="#" class="btn btn-primary">Add to cart</a>
+                </div>
             </div>
         </div>
     }

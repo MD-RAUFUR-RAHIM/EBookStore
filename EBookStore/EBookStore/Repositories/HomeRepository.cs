@@ -10,6 +10,10 @@ namespace EBookStore.Repositories
         {
             _applicationDbContext = applicationDbContext;
         }
+        public async Task<IEnumerable<Genre>> Genres()
+        {
+            return await _applicationDbContext.Genres.ToListAsync();
+        }
         public async Task<IEnumerable<Book>> GetBooks(string str = "", int genreId=0)
         {
             str = str.ToLower();

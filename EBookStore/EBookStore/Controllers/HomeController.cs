@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using EBookStore.Models;
+using EBookStore.Models.DTOs;
 using EBookStore.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,19 @@ namespace EBookStore.Controllers
             _homeRepository = homeRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sterm="", int genreId = 0)
         {
-            return View();
+            
+            IEnumerable<Book> books = await _homeRepository.GetBooks(sterm, genreId);
+            IEnumerable<Genre> genres = await _homeRepository.Genres();
+            BookDisplayModel bookModel = new BookDisplayModel
+            {
+                Books = books,
+                Genres = genres,
+                Sterm = sterm,
+                GenreId = genreId
+            };
+            return View(bookModel);
         }
 
         public IActionResult Privacy()
