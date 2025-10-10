@@ -9,7 +9,7 @@
  <div class="col-12">
             <label class="visually-hidden" for="genreId">Genres</label>
             <select class="form-select" id="genreId" name="genreId">
-    <option selected>Choose...</option>
+            <option selected>Genre </option>
                 @foreach(var genre in Model.Genres)
                 {
                     <option selected="@(genre.Id == Model.GenreId)" value="@genre.Id">@genre.GenreName </option>
@@ -38,27 +38,41 @@
             <div class="card h-100">               
                 @if (string.IsNullOrEmpty(book.BookImage))
                 {
-                    <img style="width:100%; height:300px;" src="https://picsum.photos/200" class="card-img-top" alt="...">
+                    <img style="width:100%; height:180px;" src="https://picsum.photos/200" class="card-img-top" alt="...">
                 }
                 else
                 {
-                    <img style="width:100%; height:300px;" src="/images/@book.BookImage" class="card-img-top" alt="...">
+                    <img style="width:100%; height:180px;" src="/images/@book.BookImage" class="card-img-top" alt="...">
                 }
 
                 <div class="card-body">
                     <h5 class="card-title">@book.BookName</h5>
                     <p class="card-text">
-                        Genre: @book.GenreName <br />
-                    </p>
-                    <p>
-                        Author: @book.AuthorName <br />
-                    </p>
-                    <p>
-                        Price: @book.Price
-                    </p>
-                    <a href="#" class="btn btn-primary">Add to cart</a>
+                        <b>Genre: </b> @book.GenreName <br />
+                        <b>Author: </b> @book.AuthorName <br />
+                        <b>Price: </b> @book.Price
+                    </p>           
+                    <button type="button" onclick= "add(@book.Id)" class="btn btn-primary">Add to cart</button>
                 </div>
             </div>
         </div>
     }
 </div>
+@section Scripts {
+    
+    <script> 
+        async function add(bookId){
+        try{
+            var response = await fetch(`/Cart/AddItem?bookId=${bookId}`);
+            if(response.ok){                 
+            var result = await response.json();
+            var cartCountEl = document.getElementById("cartCount");
+            cartCountEl.innerHTML = result;
+            }
+        }
+        catch(err){
+            console.error("Fetch error:", err);
+        }
+    }
+    </script>
+}

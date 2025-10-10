@@ -10,5 +10,6 @@ namespace EBookStore.Models
         public string UserId { get; set; }
         public int MyProperty { get; set; }
         public bool IsDeleted { get; set; }
+        public ICollection<CartDetail> CartDetails { get; set; }
     }
 }

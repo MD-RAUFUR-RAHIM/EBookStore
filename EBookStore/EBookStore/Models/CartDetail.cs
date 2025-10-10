@@ -6,7 +6,7 @@ namespace EBookStore.Models
     {
         public int Id { get; set; }
         [Required]
-        public int ShoopingCartId { get; set; }
+        public int ShoppingCartId { get; set; }
         [Required]
         public int BookId { get; set; }
         [Required]

@@ -70,9 +70,6 @@ namespace EBookStore.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoopingCartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
@@ -422,7 +419,7 @@ namespace EBookStore.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("EBookStore.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
+                        .WithMany("CartDetails")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -528,6 +525,11 @@ namespace EBookStore.Data.Migrations
             modelBuilder.Entity("EBookStore.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("EBookStore.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartDetails");
                 });
 #pragma warning restore 612, 618
         }
